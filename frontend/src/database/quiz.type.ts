@@ -2,6 +2,7 @@ export type Quiz = {
   id: string;
   userId?: string;
   score: number;
+  image: string;
   name: string;
   totalQuestions: number;
   questions: Array<Question>;

@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router";
-import { Home, Navbar } from "./components";
+import { Home, Navbar, QuizList } from "./components";
 import "./styles.css";
 
 function App() {
@@ -8,6 +8,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/quizzes" element={<QuizList />} />
       </Routes>
     </div>
   );

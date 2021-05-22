@@ -25,6 +25,8 @@ export const Categories: Array<Category> = [
 const Quiz1: Quiz = {
   id: "101",
   score: 0,
+  image:
+    "https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
   name: "Food & Drink Trivia",
   totalQuestions: 5,
   type: "Food",
@@ -178,6 +180,8 @@ const Quiz1: Quiz = {
 const Quiz2: Quiz = {
   id: "102",
   score: 0,
+  image:
+    "https://images.unsplash.com/photo-1542010589005-d1eacc3918f2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1069&q=80",
   name: "Nutrition Trivia",
   totalQuestions: 5,
   type: "Nutrition",
@@ -338,6 +342,8 @@ const Quiz3: Quiz = {
   id: "103",
   score: 0,
   name: "Fitness Trivia",
+  image:
+    "https://images.unsplash.com/photo-1496163668521-39614a16b23f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1189&q=80",
   totalQuestions: 5,
   type: "Fitness",
   difficulty: "easy",

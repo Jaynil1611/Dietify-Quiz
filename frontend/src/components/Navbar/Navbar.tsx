@@ -18,8 +18,8 @@ function Navbar() {
   const { isOpen, onToggle, onClose } = useDisclosure();
 
   return (
-    <Box position="sticky" top="0" zIndex={1} boxShadow="md" p="6" rounded="md">
-      <Flex bg="white" align={"center"} justifyContent="space-between">
+    <Box position="sticky" top="0" zIndex={1} boxShadow="md" rounded="lg">
+      <Flex p="6" bg="white" align={"center"} justifyContent="space-between">
         <Flex alignItems="center">
           <Flex
             flex={{ base: 1, md: "auto" }}
@@ -46,7 +46,7 @@ function Navbar() {
             justify={{ base: "center", md: "start" }}
             ml={{ base: 1 }}
           >
-            Dietify Quiz
+            <Link to="/"> Dietify Quiz</Link>
           </Flex>
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
             <DesktopMenu />
@@ -62,9 +62,11 @@ function Navbar() {
           </Link>
         </Flex>
       </Flex>
-      <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
-        <MobileMenu />
-      </Drawer>
+      <Box display={{ md: "none" }}>
+        <Drawer isOpen={isOpen} placement="left" onClose={onClose} size={"xs"}>
+          <MobileMenu />
+        </Drawer>
+      </Box>
     </Box>
   );
 }
@@ -104,7 +106,7 @@ const MobileMenu = () => (
               justify={"center"}
               alignItems={"center"}
               _hover={{
-                backgroundColor: "gray.300",
+                backgroundColor: "teal.100",
               }}
               boxShadow="md"
             >
@@ -121,6 +123,9 @@ const MobileMenu = () => (
   </>
 );
 
-const menuList: Array<Menu> = [{ name: "Home", path: "/" }];
+const menuList: Array<Menu> = [
+  { name: "Home", path: "/" },
+  { name: "Quizzes", path: "/quizzes" },
+];
 
 export default Navbar;
