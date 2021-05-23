@@ -5,4 +5,5 @@ export {
   UPDATE_SCORE,
   RESET_QUIZ,
   SELECT_OPTION,
+  SHOW_RESULT,
 } from "./actions";

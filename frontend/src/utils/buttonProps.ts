@@ -3,7 +3,7 @@ export const primaryButtonStyleProps = {
   bg: "orange.500",
   width: "100%",
   cursor: "pointer",
-  px: "1.5rem",
+  px: "1rem",
   borderRadius: "full",
   py: "0.5rem",
   height: "auto",

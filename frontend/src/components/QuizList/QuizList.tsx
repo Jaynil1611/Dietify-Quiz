@@ -8,7 +8,9 @@ import {
   Tag,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { Quizzes } from "../../database";
+import { useQuiz } from "../../contexts/quizContext";
+import { Quiz, Quizzes } from "../../database";
+import { INITIALISE_QUIZ_ATTEMPT } from "../../reducers";
 import {
   cardContentProps,
   cardImageProps,
@@ -18,6 +20,12 @@ import {
 } from "../../utils";
 
 function QuizList() {
+  const { dispatch } = useQuiz();
+
+  const loadQuiz = (quiz: Quiz) => {
+    dispatch({ type: INITIALISE_QUIZ_ATTEMPT, payload: { quiz } });
+  };
+
   return (
     <>
       <SimpleGrid columns={[1, 3]} gap={4} my={6} mx={{ base: 2, md: 6 }}>
@@ -42,9 +50,9 @@ function QuizList() {
                     {type}
                   </Tag>
                 </Box>
-                <Link to={`/quizzes/${id}`}>
-                  <Button as="a" mt={2} {...primaryButtonStyleProps}>
-                    Start Quiz
+                <Link to={`/quizzes/${id}`} onClick={() => loadQuiz(quiz)}>
+                  <Button mt={2} {...primaryButtonStyleProps}>
+                    Attempt Quiz
                   </Button>
                 </Link>
               </Flex>

@@ -13,8 +13,9 @@ export type Quiz = {
 export type Question = {
   id: string;
   question: string;
+  isAttempted?: boolean;
   points: number;
-  negativePoints?: number;
+  negativePoints: number;
   options: Array<Option>;
 };
 

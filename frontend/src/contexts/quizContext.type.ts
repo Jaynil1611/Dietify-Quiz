@@ -5,11 +5,14 @@ import {
   UPDATE_SCORE,
   RESET_QUIZ,
   SELECT_OPTION,
+  SHOW_RESULT,
 } from "../reducers";
 
 export type InitialState = {
   quizAttempt: Quiz | null;
   currentQuestionNumber: number;
+  showReview: boolean;
+  correct: number;
 };
 
 export type QuizContextType = {
@@ -23,9 +26,13 @@ export type Action =
       payload: { quiz: Quiz };
     }
   | { type: typeof INCREMENT_QUESTION_NUMBER }
-  | { type: typeof UPDATE_SCORE; payload: { questionId: string } }
+  | {
+      type: typeof UPDATE_SCORE;
+      payload: { questionId: string };
+    }
   | {
       type: typeof SELECT_OPTION;
       payload: { questionId: string; optionId: string };
     }
+  | { type: typeof SHOW_RESULT }
   | { type: typeof RESET_QUIZ };

@@ -1,2 +1,2 @@
 export { Quizzes, Categories } from "./database";
-export type { Quiz } from "./quiz.type";
+export type { Quiz, Question, Option } from "./quiz.type";

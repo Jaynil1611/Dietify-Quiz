@@ -16,13 +16,7 @@ function Home() {
         >
           <Text>Do you know what healthy diet is?</Text>
           <Text>Test your knowledge by taking one of the quizzes below</Text>
-          <Button
-            {...primaryButtonStyleProps}
-            as="a"
-            maxW={"min"}
-            mx={"auto"}
-            mt={3}
-          >
+          <Button {...primaryButtonStyleProps} maxW={"min"} mx={"auto"} mt={3}>
             <Link to="/quizzes">Trending Quizzes</Link>
           </Button>
         </Flex>

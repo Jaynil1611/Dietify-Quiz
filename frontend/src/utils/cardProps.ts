@@ -30,3 +30,9 @@ export const questionDisplayProps = {
   fontWeight: "semibold",
   color: "gray.400",
 };
+
+export const questionStyleProps = {
+  fontWeight: "semibold",
+  fontSize: "lg",
+  color: "gray.600",
+};

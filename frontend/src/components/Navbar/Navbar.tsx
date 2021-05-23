@@ -13,6 +13,7 @@ import {
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { Link, NavLink } from "react-router-dom";
 import { Menu } from "./Navbar.type";
+import React from "react";
 
 function Navbar() {
   const { isOpen, onToggle, onClose } = useDisclosure();
@@ -63,8 +64,8 @@ function Navbar() {
         </Flex>
       </Flex>
       <Box display={{ md: "none" }}>
-        <Drawer isOpen={isOpen} placement="left" onClose={onClose} size={"xs"}>
-          <MobileMenu />
+        <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
+          <MobileMenu closeDrawer={onClose} />
         </Drawer>
       </Box>
     </Box>
@@ -92,35 +93,36 @@ const DesktopMenu = () => (
   </Flex>
 );
 
-const MobileMenu = () => (
-  <>
+const MobileMenu = (prop: any) => (
+  <div onClick={prop.closeDrawer}>
     <DrawerOverlay />
     <DrawerContent>
       <DrawerCloseButton />
       <DrawerBody>
         <Flex direction={"column"} bg="white" mt={10} display={{ md: "none" }}>
           {menuList.map(({ name, path }) => (
-            <Flex
-              py={4}
-              mb={4}
-              justify={"center"}
-              alignItems={"center"}
-              _hover={{
-                backgroundColor: "teal.100",
-              }}
-              boxShadow="md"
-            >
-              <NavLink to={path} key={name}>
+            <NavLink to={path} key={name}>
+              <Flex
+                key={name}
+                py={4}
+                mb={4}
+                justify={"center"}
+                alignItems={"center"}
+                _hover={{
+                  backgroundColor: "teal.100",
+                }}
+                boxShadow="md"
+              >
                 <Box as="span" fontSize={"1rem"} color="gray.900">
                   {name}
                 </Box>
-              </NavLink>
-            </Flex>
+              </Flex>
+            </NavLink>
           ))}
         </Flex>
       </DrawerBody>
     </DrawerContent>
-  </>
+  </div>
 );
 
 const menuList: Array<Menu> = [
