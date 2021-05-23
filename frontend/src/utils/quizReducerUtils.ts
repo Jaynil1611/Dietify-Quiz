@@ -44,3 +44,11 @@ export const getUpdatedScore = (
 export const checkSelectedOption = (options: Array<Option>) => {
   return options.find(({ isRight, isSelected }) => isRight && isSelected);
 };
+
+export const getPoints = (
+  options: Array<Option>,
+  points: number,
+  negativePoints: number
+) => {
+  return checkSelectedOption(options) ? points : negativePoints;
+};

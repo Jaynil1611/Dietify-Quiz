@@ -9,11 +9,10 @@ import {
   Box,
 } from "@chakra-ui/react";
 import {
-  checkSelectedOption,
+  getPoints,
   primaryButtonStyleProps,
   questionStyleProps,
 } from "../../utils";
-import { Option } from "../../database";
 import OptionReview from "./OptionReview";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router";
@@ -67,13 +66,5 @@ function QuestionReview() {
     </>
   );
 }
-
-const getPoints = (
-  options: Array<Option>,
-  points: number,
-  negativePoints: number
-) => {
-  return checkSelectedOption(options) ? points : negativePoints;
-};
 
 export default QuestionReview;

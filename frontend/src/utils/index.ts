@@ -11,4 +11,5 @@ export {
   checkSelectedOption,
   getUpdatedOptions,
   getUpdatedScore,
+  getPoints,
 } from "./quizReducerUtils";
