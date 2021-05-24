@@ -240,7 +240,7 @@ const Quiz2: Quiz = {
         },
         {
           id: uuidv4(),
-          text: "meats",
+          text: "candy",
           isRight: false,
         },
       ],
