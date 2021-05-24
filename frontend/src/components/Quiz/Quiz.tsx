@@ -10,11 +10,11 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useQuiz } from "../../contexts/quizContext";
 import { INITIALISE_QUIZ_ATTEMPT, RESET_QUIZ } from "../../reducers";
-import Question from "./Question";
+import QuestionCard from "./QuestionCard";
 import QuizInstructions from "./QuizInstructions";
 import { Quizzes } from "../../database";
 import { findQuiz, questionStyleProps } from "../../utils";
-import QuizReview from "./QuizReview";
+import QuizReview from "../QuizReview/QuizReview";
 
 function Quiz() {
   const [showQuestions, setShowQuestions] = useState(false);
@@ -57,14 +57,14 @@ function Quiz() {
                   </Heading>
                   <Flex justify={"space-between"}>
                     <Text {...questionStyleProps}>
-                      Question : {currentQuestionNumber} /{" "}
+                      Question : {currentQuestionNumber} /
                       {quizAttempt.totalQuestions}
                     </Text>
                     <Text {...questionStyleProps}>
                       Score: {quizAttempt.score}
                     </Text>
                   </Flex>
-                  <Question
+                  <QuestionCard
                     question={quizAttempt.questions[currentQuestionNumber - 1]}
                   />
                 </SimpleGrid>

@@ -36,3 +36,4 @@ export const questionStyleProps = {
   fontSize: "lg",
   color: "gray.600",
 };
+

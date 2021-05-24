@@ -1,8 +1,7 @@
 import { Routes, Route } from "react-router";
-import { Home, Navbar, QuizList, Quiz } from "./components";
-import NotFound from "./components/NotFound/NotFound";
-import ScrollToTop from "./components/NotFound/ScrollToTop";
+import { Home, Navbar, QuizList, Quiz, NotFound } from "./components";
 import "./styles.css";
+import { ScrollToTop } from "./utils";
 
 function App() {
   return (

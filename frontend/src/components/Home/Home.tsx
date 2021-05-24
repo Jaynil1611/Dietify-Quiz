@@ -16,9 +16,11 @@ function Home() {
         >
           <Text>Do you know what healthy diet is?</Text>
           <Text>Test your knowledge by taking one of the quizzes below</Text>
-          <Button {...primaryButtonStyleProps} maxW={"min"} mx={"auto"} mt={3}>
-            <Link to="/quizzes">Trending Quizzes</Link>
-          </Button>
+          <Link to="/quizzes">
+            <Button {...primaryButtonStyleProps} maxW={"min"} mt={3}>
+              Trending Quizzes
+            </Button>
+          </Link>
         </Flex>
         <Box>
           <Image

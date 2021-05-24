@@ -6,7 +6,7 @@ import {
   ListIcon,
   ListItem,
 } from "@chakra-ui/react";
-import { QuizInstructionsProps } from "./QuizInstructions.type";
+import { QuizInstructionsProps } from "./QuizInstructionsProps.type";
 import { InfoIcon } from "@chakra-ui/icons";
 import { primaryButtonStyleProps } from "../../utils";
 

@@ -10,20 +10,13 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import { useQuiz } from "../../contexts/quizContext";
-import { Question } from "../../database";
 import QuestionReview from "./QuestionReview";
-
-const questionColor = {
-  color: "blue.500",
-};
-
-const correctColor = {
-  color: "green.500",
-};
-
-const wrongColor = {
-  color: "red.500",
-};
+import {
+  getAttemptedQuestions,
+  correctColor,
+  wrongColor,
+  questionColor,
+} from "../../utils";
 
 function QuizReview() {
   const {
@@ -51,11 +44,17 @@ function QuizReview() {
             size={120}
             thickness={6}
           >
-            <CircularProgressLabel fontSize={{base:"1rem",md:"1.5rem"}} fontWeight={"bold"}>
+            <CircularProgressLabel
+              fontSize={{ base: "1.3rem", md: "1.5rem" }}
+              fontWeight={"bold"}
+            >
               {score} / 50
             </CircularProgressLabel>
           </CircularProgress>
         </Box>
+        <Heading fontSize={"2xl"} mb={2}>
+          Review Answers
+        </Heading>
         <HStack spacing={[4, 8]} textAlign={"center"}>
           <Stat>
             <StatLabel {...questionColor}> Total </StatLabel>
@@ -79,9 +78,5 @@ function QuizReview() {
     </>
   );
 }
-
-const getAttemptedQuestions = (questions: Array<Question>) => {
-  return questions.filter(({ isAttempted }) => isAttempted === true).length;
-};
 
 export default QuizReview;

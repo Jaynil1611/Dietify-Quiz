@@ -36,13 +36,13 @@ function QuestionReview() {
                 <Text {...questionStyleProps}>
                   Question : {index + 1} / {totalQuestions}
                 </Text>
-                <Heading fontSize={"xl"} m={0}>
+                <Heading fontSize={"xl"} px={2}>
                   {question}
-                </Heading>
+                </Heading>  
                 <Tag
                   textAlign={"center"}
-                  p={4}
-                  fontSize={"md"}
+                  size={"lg"}
+                  fontSize={{ base: "md", md: "lg" }}
                   bgColor="gray.200"
                 >
                   Points : {"  "}

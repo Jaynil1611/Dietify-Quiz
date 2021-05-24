@@ -1,9 +1,5 @@
-import { Option, Question } from "../../database";
+import { Question } from "../../database";
 
 export type QuestionProp = {
   question: Question;
-};
-
-export type OptionReviewProp = {
-  options: Array<Option>;
 };
