@@ -27,18 +27,21 @@ function QuestionReview() {
   return (
     <>
       <SimpleGrid gap={6} textAlign={"center"} mb={8}>
+        <Heading fontSize={"2xl"} mt={2}>
+          Review Answers
+        </Heading>
         {questions.map((quizQuestion, index) => {
           const { id, question, isAttempted, options, points, negativePoints } =
             quizQuestion;
           return (
             <div key={id}>
-              <VStack key={id} spacing={[3, 6]} mt={4}>
+              <VStack key={id} spacing={[3, 8]} mt={1}>
                 <Text {...questionStyleProps}>
                   Question : {index + 1} / {totalQuestions}
                 </Text>
                 <Heading fontSize={"xl"} px={2}>
                   {question}
-                </Heading>  
+                </Heading>
                 <Tag
                   textAlign={"center"}
                   size={"lg"}

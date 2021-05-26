@@ -58,8 +58,10 @@ export default function quizReducer(
           quizAttempt: {
             ...prevState.quizAttempt,
             score: score,
+            correct:
+              (score > prevScore ? 1 : 0) +
+              (prevState.quizAttempt.correct ?? 0),
           },
-          correct: prevState.correct + (score > prevScore ? 1 : 0),
         };
       }
       throw new Error("No quiz found!");

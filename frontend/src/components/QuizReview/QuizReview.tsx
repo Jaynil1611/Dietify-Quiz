@@ -20,9 +20,9 @@ import {
 
 function QuizReview() {
   const {
-    state: { quizAttempt, correct },
+    state: { quizAttempt },
   } = useQuiz();
-  const { score, totalQuestions, questions } = quizAttempt!;
+  const { score, totalQuestions, questions, correct } = quizAttempt!;
   const attempted = getAttemptedQuestions(questions);
   return (
     <>
@@ -52,9 +52,7 @@ function QuizReview() {
             </CircularProgressLabel>
           </CircularProgress>
         </Box>
-        <Heading fontSize={"2xl"} mb={2}>
-          Review Answers
-        </Heading>
+       
         <HStack spacing={[4, 8]} textAlign={"center"}>
           <Stat>
             <StatLabel {...questionColor}> Total </StatLabel>
@@ -70,7 +68,9 @@ function QuizReview() {
           </Stat>
           <Stat>
             <StatLabel {...wrongColor}> Wrong </StatLabel>
-            <StatNumber {...wrongColor}>{attempted - correct}</StatNumber>
+            <StatNumber {...wrongColor}>
+              {attempted - (correct ?? 0)}
+            </StatNumber>
           </Stat>
         </HStack>
       </Container>

@@ -8,6 +8,7 @@ export type Quiz = {
   questions: Array<Question>;
   type: string;
   difficulty: string;
+  correct?: number;
 };
 
 export type Question = {

@@ -12,7 +12,6 @@ export type InitialState = {
   quizAttempt: Quiz | null;
   currentQuestionNumber: number;
   showReview: boolean;
-  correct: number;
 };
 
 export type QuizContextType = {
