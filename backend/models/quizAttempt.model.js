@@ -33,6 +33,7 @@ const QuizAttemptSchema = new Schema(
     difficulty: { type: String, required: true },
     type: { type: String, required: true },
     correct: { type: Number, default: 0 },
+    isSubmitted: { type: Boolean },
     questions: [QuestionAttemptSchema],
   },
   opts

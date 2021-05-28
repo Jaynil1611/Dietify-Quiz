@@ -16,7 +16,9 @@ const postQuizAttempt = async (req, res, next) => {
     quiz = await quiz.save();
     res.status(201).json({ success: true, quiz });
   } catch (error) {
-    next(error);
+    res
+      .status(409)
+      .json({ success: false, message: "Quiz attempt already exists" });
   }
 };
 

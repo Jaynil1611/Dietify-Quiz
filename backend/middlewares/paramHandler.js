@@ -26,7 +26,8 @@ const quizAttemptParamHandler = async (req, res, next, quizId) => {
     const quiz = await QuizAttempt.findOne({ userId, _id: quizId }).select(
       "-__v"
     );
-    if (!quiz) {
+    const submitStatus = quiz.isSubmitted;
+    if (!quiz || submitStatus) {
       return res
         .status(400)
         .json({ success: false, message: "Quiz not found!" });
