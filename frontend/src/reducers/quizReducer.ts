@@ -1,9 +1,13 @@
 import { Action, InitialState } from "../contexts";
-import { initialState } from "../contexts/initialState";
-import { getUpdatedScore, getUpdatedOptions } from "../utils";
-
+import {
+  getUpdatedScore,
+  getUpdatedOptions,
+  getUpdatedQuestionNumber,
+  getUpdatedCorrectValue,
+} from "../utils";
 import {
   INCREMENT_QUESTION_NUMBER,
+  INITIALISE_QUIZZES,
   INITIALISE_QUIZ_ATTEMPT,
   RESET_QUIZ,
   SELECT_OPTION,
@@ -16,6 +20,12 @@ export default function quizReducer(
   action: Action
 ): InitialState {
   switch (action.type) {
+    case INITIALISE_QUIZZES:
+      return {
+        ...prevState,
+        quizzes: action.payload.quizzes,
+      };
+
     case INITIALISE_QUIZ_ATTEMPT:
       return {
         ...prevState,
@@ -43,7 +53,10 @@ export default function quizReducer(
       if (prevState.quizAttempt) {
         return {
           ...prevState,
-          currentQuestionNumber: prevState.currentQuestionNumber + 1,
+          currentQuestionNumber: getUpdatedQuestionNumber(
+            prevState.currentQuestionNumber,
+            action.payload?.questionNumber
+          ),
         };
       }
       throw new Error("No quiz found!");
@@ -51,16 +64,17 @@ export default function quizReducer(
     case UPDATE_SCORE:
       if (prevState.quizAttempt) {
         const { questionId } = action.payload;
-        const prevScore = prevState.quizAttempt.score;
         const score = getUpdatedScore(prevState.quizAttempt, questionId);
         return {
           ...prevState,
           quizAttempt: {
             ...prevState.quizAttempt,
             score: score,
-            correct:
-              (score > prevScore ? 1 : 0) +
-              (prevState.quizAttempt.correct ?? 0),
+            correct: getUpdatedCorrectValue(
+              prevState.quizAttempt.correct,
+              score,
+              prevState.quizAttempt.score
+            ),
           },
         };
       }
@@ -69,12 +83,16 @@ export default function quizReducer(
     case SHOW_RESULT:
       return {
         ...prevState,
+        quizAttempt: { ...prevState.quizAttempt!, isSubmitted: true },
         showReview: true,
       };
 
     case RESET_QUIZ:
       return {
-        ...initialState,
+        ...prevState,
+        quizAttempt: null,
+        currentQuestionNumber: 1,
+        showReview: false,
       };
 
     default:

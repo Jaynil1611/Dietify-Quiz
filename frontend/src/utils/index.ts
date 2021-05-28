@@ -11,8 +11,16 @@ export {
   checkSelectedOption,
   getUpdatedOptions,
   getUpdatedScore,
+  getUpdatedQuestionNumber,
+  getUpdatedCorrectValue,
 } from "./quizReducerUtils";
-export { getPoints, getAttemptedQuestions } from "./quizUtils";
+export {
+  getPoints,
+  getAttemptedQuestions,
+  findCurrentQuestionNumber,
+  constructURL,
+  checkQuizEnd,
+} from "./quizUtils";
 export { default as ScrollToTop } from "./ScrollToTop";
 export { optionColorStyle, textProps } from "./optionStyles";
 export { correctColor, wrongColor, questionColor } from "./quizReveiwProps";

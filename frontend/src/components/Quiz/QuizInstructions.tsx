@@ -8,13 +8,28 @@ import {
 } from "@chakra-ui/react";
 import { QuizInstructionsProps } from "./QuizInstructionsProps.type";
 import { InfoIcon } from "@chakra-ui/icons";
-import { primaryButtonStyleProps } from "../../utils";
+import { primaryButtonStyleProps, constructURL } from "../../utils";
+import { callMockServer } from "../../server";
+import { showToast } from "../Toast/Toast";
 
 function QuizInstructions(prop: QuizInstructionsProps) {
   const {
     setShowQuestions,
     quiz: { name, totalQuestions },
   } = prop;
+
+  const showQuestions = async () => {
+    const { error } = await callMockServer({
+      type: "post",
+      url: `${constructURL()}/attempt`,
+      data: prop.quiz,
+    });
+    if (!error) {
+      return setShowQuestions(true);
+    }
+    showToast(`You've exhausted your quiz attempt`, "error");
+  };
+
   return (
     <>
       <Container
@@ -42,9 +57,13 @@ function QuizInstructions(prop: QuizInstructionsProps) {
             <ListIcon as={InfoIcon} color="green.500" />
             You need to score atleast 25 points to pass the quiz
           </ListItem>
+          <ListItem>
+            <ListIcon as={InfoIcon} color="green.500" />
+            Maxiumum <b>1</b> quiz attempt is allowed
+          </ListItem>
           <ListItem textAlign={"center"}>
             <Button
-              onClick={() => setShowQuestions(true)}
+              onClick={showQuestions}
               maxW={"min"}
               mt={2}
               {...primaryButtonStyleProps}

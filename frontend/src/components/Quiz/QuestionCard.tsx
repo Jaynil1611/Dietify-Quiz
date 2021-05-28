@@ -7,9 +7,9 @@ import {
   Box,
   Button,
 } from "@chakra-ui/react";
-import { primaryButtonStyleProps } from "../../utils";
+import { primaryButtonStyleProps, checkQuizEnd } from "../../utils";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { useQuiz } from "../../contexts/quizContext";
+import { useQuiz } from "../../contexts";
 import {
   INCREMENT_QUESTION_NUMBER,
   SELECT_OPTION,
@@ -17,6 +17,9 @@ import {
   UPDATE_SCORE,
 } from "../../reducers";
 import OptionCard from "./OptionCard";
+import { updateQuizAttempt } from "../../server";
+import { useParams } from "react-router";
+import { useEffect } from "react";
 
 function QuestionCard(prop: QuestionProp) {
   const { question: quizQuestion } = prop;
@@ -25,14 +28,28 @@ function QuestionCard(prop: QuestionProp) {
     state: { currentQuestionNumber, quizAttempt },
     dispatch,
   } = useQuiz();
+  const { quizId } = useParams();
+  const score = quizAttempt?.score;
 
   const updateSelectedOption = (optionId: string) =>
     dispatch({ type: SELECT_OPTION, payload: { questionId, optionId } });
 
-  const updateQuestionNumber = () => {
+  useEffect(() => {
+    (async () => {
+      if (quizAttempt) updateQuizAttempt(quizAttempt, quizId);
+    })();
+  }, [score]);
+
+  const updateQuestionNumber = async () => {
+    const quizEnded = checkQuizEnd(
+      currentQuestionNumber,
+      quizAttempt!.totalQuestions
+    );
+
     quizQuestion.isAttempted &&
       dispatch({ type: UPDATE_SCORE, payload: { questionId } });
-    currentQuestionNumber >= quizAttempt!.totalQuestions
+
+    quizEnded
       ? dispatch({ type: SHOW_RESULT })
       : dispatch({ type: INCREMENT_QUESTION_NUMBER });
   };
@@ -65,7 +82,9 @@ function QuestionCard(prop: QuestionProp) {
             rightIcon={<ArrowForwardIcon />}
             {...primaryButtonStyleProps}
           >
-            Next
+            {currentQuestionNumber === quizAttempt!.totalQuestions
+              ? "Finish"
+              : "Next"}
           </Button>
         </Box>
       </Stack>

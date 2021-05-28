@@ -43,3 +43,17 @@ export const checkSelectedOption = (options: Array<Option>) => {
   return options.find(({ isRight, isSelected }) => isRight && isSelected);
 };
 
+export const getUpdatedQuestionNumber = (
+  currentQuestionNumber: number,
+  incrementNumber: number | undefined
+) => {
+  return currentQuestionNumber + (incrementNumber ?? 1);
+};
+
+export const getUpdatedCorrectValue = (
+  prevCorrect: number | undefined,
+  currentScore: number,
+  prevScore: number
+): number => {
+  return (currentScore > prevScore ? 1 : 0) + (prevCorrect ?? 0);
+};

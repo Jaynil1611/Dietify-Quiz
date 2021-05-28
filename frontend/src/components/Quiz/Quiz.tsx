@@ -8,35 +8,33 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { useQuiz } from "../../contexts/quizContext";
+import { useQuiz } from "../../contexts";
 import { INITIALISE_QUIZ_ATTEMPT, RESET_QUIZ } from "../../reducers";
 import QuestionCard from "./QuestionCard";
 import QuizInstructions from "./QuizInstructions";
-import { Quizzes } from "../../database";
 import { findQuiz, questionStyleProps } from "../../utils";
-import QuizReview from "../QuizReview/QuizReview";
+import { QuizReview } from "../index";
+import { getQuizAttempt } from "../../server";
 
 function Quiz() {
   const [showQuestions, setShowQuestions] = useState(false);
   const {
-    state: { quizAttempt, currentQuestionNumber, showReview },
+    state: { quizzes, quizAttempt, currentQuestionNumber, showReview },
     dispatch,
   } = useQuiz();
   const { quizId } = useParams();
 
   useEffect(() => {
-    try {
-      const quiz = findQuiz(Quizzes, quizId);
-      if (quizId && quiz) {
-        dispatch({ type: INITIALISE_QUIZ_ATTEMPT, payload: { quiz } });
-      }
-    } catch (error) {
-      alert("No quiz Found");
-    }
-    return () => {
-      dispatch({ type: RESET_QUIZ });
-    };
-  }, [quizId, dispatch]);
+    (async () => {
+      if (!quizzes.length) return;
+      const result = await getQuizAttempt(dispatch, quizId);
+      if (result) return setShowQuestions(true);
+      const quiz = findQuiz(quizzes, quizId);
+      if (quizId && quiz)
+        return dispatch({ type: INITIALISE_QUIZ_ATTEMPT, payload: { quiz } });
+    })();
+    return () => dispatch({ type: RESET_QUIZ });
+  }, [dispatch, quizId, quizzes]);
 
   return (
     <>
