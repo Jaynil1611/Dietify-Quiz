@@ -6,9 +6,11 @@ import {
   RESET_QUIZ,
   SELECT_OPTION,
   SHOW_RESULT,
+  INITIALISE_QUIZZES,
 } from "../reducers";
 
 export type InitialState = {
+  quizzes: Array<Quiz>;
   quizAttempt: Quiz | null;
   currentQuestionNumber: number;
   showReview: boolean;
@@ -24,7 +26,11 @@ export type Action =
       type: typeof INITIALISE_QUIZ_ATTEMPT;
       payload: { quiz: Quiz };
     }
-  | { type: typeof INCREMENT_QUESTION_NUMBER }
+  | { type: typeof INITIALISE_QUIZZES; payload: { quizzes: Array<Quiz> } }
+  | {
+      type: typeof INCREMENT_QUESTION_NUMBER;
+      payload?: { questionNumber: number };
+    }
   | {
       type: typeof UPDATE_SCORE;
       payload: { questionId: string };

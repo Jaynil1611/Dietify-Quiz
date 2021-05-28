@@ -6,4 +6,5 @@ export {
   RESET_QUIZ,
   SELECT_OPTION,
   SHOW_RESULT,
+  INITIALISE_QUIZZES,
 } from "./actions";
