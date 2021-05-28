@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useQuiz } from "../../contexts/quizContext";
-import { Quiz, Quizzes } from "../../database";
+import { Quiz } from "../../database";
 import { INITIALISE_QUIZ_ATTEMPT } from "../../reducers";
 import {
   cardContentProps,
@@ -20,7 +20,10 @@ import {
 } from "../../utils";
 
 function QuizList() {
-  const { dispatch } = useQuiz();
+  const {
+    state: { quizzes },
+    dispatch,
+  } = useQuiz();
 
   const loadQuiz = (quiz: Quiz) => {
     dispatch({ type: INITIALISE_QUIZ_ATTEMPT, payload: { quiz } });
@@ -29,7 +32,7 @@ function QuizList() {
   return (
     <>
       <SimpleGrid columns={[1, 3]} gap={4} my={6} mx={{ base: 2, md: 6 }}>
-        {Quizzes.map((quiz) => {
+        {quizzes.map((quiz) => {
           const { id, name, image, difficulty, type, totalQuestions } = quiz;
           return (
             <Box {...cardContentProps} key={id}>
