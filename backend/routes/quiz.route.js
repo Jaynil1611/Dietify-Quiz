@@ -6,6 +6,7 @@ const {
   getQuizById,
 } = require("../controllers/quiz.controller");
 
+
 router.route("/").get(getAllQuizzes);
 
 router.param("quizId", quizParamHandler);
