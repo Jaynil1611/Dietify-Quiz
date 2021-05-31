@@ -1,28 +1,15 @@
-import {
-  Box,
-  Flex,
-  IconButton,
-  Image,
-  Drawer,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  DrawerBody,
-  useDisclosure,
-  MenuList,
-  MenuItem,
-  Menu,
-  MenuButton,
-} from "@chakra-ui/react";
+import { Box, Flex, IconButton, Drawer, useDisclosure } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Menu as MenuType } from "./Navbar.type";
 import { useQuiz } from "../../contexts";
-import { useEffect } from "react";
-import { getUserDetails } from "../../server";
+import { DesktopMenu } from "./DesktopMenu";
+import { MobileMenu } from "./MobileMenu";
+import { CollapseMenu } from "./CollapseMenu";
 
 function Navbar() {
   const { isOpen, onToggle, onClose } = useDisclosure();
+  const { token } = useQuiz();
 
   return (
     <>
@@ -57,7 +44,7 @@ function Navbar() {
               <Link to="/"> Dietify Quiz</Link>
             </Flex>
             <Flex display={{ base: "none", md: "flex" }} ml={10}>
-              <DesktopMenu />
+              <DesktopMenu menuList={menuList} token={token} />
             </Flex>
           </Flex>
           <Flex>
@@ -66,7 +53,11 @@ function Navbar() {
         </Flex>
         <Box display={{ md: "none" }}>
           <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
-            <MobileMenu closeDrawer={onClose} />
+            <MobileMenu
+              menuList={menuList}
+              closeDrawer={onClose}
+              token={token}
+            />
           </Drawer>
         </Box>
       </Box>
@@ -74,95 +65,16 @@ function Navbar() {
   );
 }
 
-const CollapseMenu = () => {
-  const {
-    state: { firstname, lastname },
-    logoutUser,
-    token,
-    dispatch,
-  } = useQuiz();
-
-  useEffect(() => {
-    token && getUserDetails(dispatch);
-  }, [token, dispatch]);
-
-  return (
-    <>
-      {token && (
-        <Menu>
-          <MenuButton as={Box}>
-            <Image
-              src={`https://ui-avatars.com/api/?name=${firstname}+${lastname}&rounded=true&background=fd7014&color=fff&size=32`}
-              alt=""
-              borderRadius="full"
-            />
-          </MenuButton>
-          <MenuList>
-            <MenuItem onClick={logoutUser}>Logout</MenuItem>
-          </MenuList>
-        </Menu>
-      )}
-    </>
-  );
-};
-
-const DesktopMenu = () => (
-  <Flex align={"center"} spacing={4}>
-    {menuList.map(({ name, path }) => (
-      <Link to={path} key={name}>
-        <Box
-          as="span"
-          p={2}
-          fontSize={"1rem"}
-          color="gray.900"
-          _hover={{
-            textDecoration: "none",
-            color: "orange.600",
-          }}
-        >
-          {name}
-        </Box>
-      </Link>
-    ))}
-  </Flex>
-);
-
-const MobileMenu = (prop: any) => (
-  <div onClick={prop.closeDrawer}>
-    <DrawerOverlay />
-    <DrawerContent>
-      <DrawerCloseButton />
-      <DrawerBody>
-        <Flex direction={"column"} bg="white" mt={10} display={{ md: "none" }}>
-          {menuList.map(({ name, path }) => (
-            <NavLink to={path} key={name}>
-              <Flex
-                key={name}
-                py={4}
-                mb={4}
-                justify={"center"}
-                alignItems={"center"}
-                _hover={{
-                  backgroundColor: "teal.100",
-                }}
-                boxShadow="md"
-              >
-                <Box as="span" fontSize={"1rem"} color="gray.900">
-                  {name}
-                </Box>
-              </Flex>
-            </NavLink>
-          ))}
-        </Flex>
-      </DrawerBody>
-    </DrawerContent>
-  </div>
-);
-
 const menuList: Array<MenuType> = [
   { name: "Home", path: "/" },
   { name: "Quizzes", path: "/quizzes" },
   { name: "Login", path: "/login" },
 ];
+
+export const getMenuList = (
+  menuList: Array<MenuType>,
+  token: string
+): Array<MenuType> =>
+  token ? menuList.slice(0, menuList.length - 1) : menuList;
 
 export default Navbar;
