@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Quiz } from "../database";
 import { Option, Question } from "../database";
 import { checkSelectedOption } from "./quizReducerUtils";
@@ -19,8 +20,7 @@ export const getAttemptedQuestions = (questions: Array<Question>): number => {
 };
 
 export const constructURL = () => {
-  const userId = "60ae411072e44c2e44da4814";
-  return `${process.env.REACT_APP_BACKEND_URL}/user/${userId}`;
+  return `${process.env.REACT_APP_BACKEND_URL}`;
 };
 
 export const findCurrentQuestionNumber = (quiz: Quiz) => {
@@ -34,3 +34,9 @@ export const checkQuizEnd = (
   currentQuestionNumber: number,
   totalQuestions: number
 ): boolean => currentQuestionNumber === totalQuestions;
+
+export const setupAuthHeaderForServerCalls = (AUTH_TOKEN: string | null) => {
+  return AUTH_TOKEN
+    ? (axios.defaults.headers.common["Authorization"] = AUTH_TOKEN)
+    : delete axios.defaults.headers.common["Authorization"];
+};

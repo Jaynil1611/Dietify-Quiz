@@ -3,10 +3,12 @@ import { Quiz } from "../database";
 import {
   INCREMENT_QUESTION_NUMBER,
   INITIALISE_QUIZ_ATTEMPT,
+  UPDATE_USER_DETAILS,
 } from "../reducers";
 import { constructURL, findCurrentQuestionNumber } from "../utils";
 import callMockServer from "./server.request";
 import { Action } from "../contexts";
+import { SignUp } from "./server.type";
 
 export const submitQuiz = async (quizAttempt: Quiz, quizId: string) => {
   const { error } = await callMockServer({
@@ -50,4 +52,34 @@ export const updateQuizAttempt = async (quizAttempt: Quiz, quizId: string) => {
     data: quizAttempt,
     url: `${constructURL()}/attempt/${quizId}`,
   });
+};
+
+export const signUpUser = async ({
+  firstname,
+  lastname,
+  email,
+  password,
+}: SignUp): Promise<Boolean> => {
+  const { error } = await callMockServer({
+    type: "post",
+    url: `${constructURL()}/users`,
+    data: { firstname, lastname, email, password },
+  });
+  if (!error) {
+    showToast("Sign up successful", "success");
+    return true;
+  }
+  showToast("Sign up failed!", "error");
+  return false;
+};
+
+export const getUserDetails = async (dispatch: (action: Action) => void) => {
+  const { response, error } = await callMockServer({
+    type: "get",
+    url: `${constructURL()}/users/user`,
+  });
+  if (!error) {
+    const { firstname, lastname } = response?.data.user;
+    dispatch({ type: UPDATE_USER_DETAILS, payload: { firstname, lastname } });
+  }
 };

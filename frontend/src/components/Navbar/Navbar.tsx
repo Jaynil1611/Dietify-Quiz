@@ -9,68 +9,102 @@ import {
   DrawerCloseButton,
   DrawerBody,
   useDisclosure,
+  MenuList,
+  MenuItem,
+  Menu,
+  MenuButton,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { Link, NavLink } from "react-router-dom";
-import { Menu } from "./Navbar.type";
-import React from "react";
+import { Menu as MenuType } from "./Navbar.type";
+import { useQuiz } from "../../contexts";
+import { useEffect } from "react";
+import { getUserDetails } from "../../server";
 
 function Navbar() {
   const { isOpen, onToggle, onClose } = useDisclosure();
 
   return (
-    <Box position="sticky" top="0" zIndex={1} boxShadow="md" rounded="lg">
-      <Flex p="6" bg="white" align={"center"} justifyContent="space-between">
-        <Flex alignItems="center">
-          <Flex
-            flex={{ base: 1, md: "auto" }}
-            ml={{ base: -2 }}
-            mt={1}
-            display={{ base: "flex", md: "none" }}
-          >
-            <IconButton
-              onClick={onToggle}
-              icon={
-                isOpen ? (
-                  <CloseIcon w={4} h={4} />
-                ) : (
-                  <HamburgerIcon w={6} h={6} />
-                )
-              }
-              variant={"ghost"}
-              aria-label={"Toggle Navigation"}
-            />
+    <>
+      <Box position="sticky" top="0" zIndex={1} boxShadow="md" rounded="lg">
+        <Flex p="6" bg="white" align={"center"} justifyContent="space-between">
+          <Flex alignItems="center">
+            <Flex
+              flex={{ base: 1, md: "auto" }}
+              ml={{ base: -2 }}
+              mt={1}
+              display={{ base: "flex", md: "none" }}
+            >
+              <IconButton
+                onClick={onToggle}
+                icon={
+                  isOpen ? (
+                    <CloseIcon w={4} h={4} />
+                  ) : (
+                    <HamburgerIcon w={6} h={6} />
+                  )
+                }
+                variant={"ghost"}
+                aria-label={"Toggle Navigation"}
+              />
+            </Flex>
+            <Flex
+              fontSize={{ base: "xl", md: "2xl" }}
+              fontWeight="semibold"
+              justify={{ base: "center", md: "start" }}
+              ml={{ base: 1 }}
+            >
+              <Link to="/"> Dietify Quiz</Link>
+            </Flex>
+            <Flex display={{ base: "none", md: "flex" }} ml={10}>
+              <DesktopMenu />
+            </Flex>
           </Flex>
-          <Flex
-            fontSize={{ base: "xl", md: "2xl" }}
-            fontWeight="semibold"
-            justify={{ base: "center", md: "start" }}
-            ml={{ base: 1 }}
-          >
-            <Link to="/"> Dietify Quiz</Link>
-          </Flex>
-          <Flex display={{ base: "none", md: "flex" }} ml={10}>
-            <DesktopMenu />
+          <Flex>
+            <CollapseMenu />
           </Flex>
         </Flex>
-        <Flex>
-          <Link to="/">
+        <Box display={{ md: "none" }}>
+          <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
+            <MobileMenu closeDrawer={onClose} />
+          </Drawer>
+        </Box>
+      </Box>
+    </>
+  );
+}
+
+const CollapseMenu = () => {
+  const {
+    state: { firstname, lastname },
+    logoutUser,
+    token,
+    dispatch,
+  } = useQuiz();
+
+  useEffect(() => {
+    token && getUserDetails(dispatch);
+  }, [token, dispatch]);
+
+  return (
+    <>
+      {token && (
+        <Menu>
+          <MenuButton as={Box}>
             <Image
-              src={`https://ui-avatars.com/api/?name=Jaynil+Gaglani&rounded=true&background=fd7014&color=fff&size=32`}
+              src={`https://ui-avatars.com/api/?name=${firstname}+${lastname}&rounded=true&background=fd7014&color=fff&size=32`}
               alt=""
               borderRadius="full"
             />
-          </Link>
-        </Flex>
-      </Flex>
-      <Box display={{ md: "none" }}>
-        <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
-          <MobileMenu closeDrawer={onClose} />
-        </Drawer>
-      </Box>
-    </Box>
+          </MenuButton>
+          <MenuList>
+            <MenuItem onClick={logoutUser}>Logout</MenuItem>
+          </MenuList>
+        </Menu>
+      )}
+    </>
   );
-}
+};
 
 const DesktopMenu = () => (
   <Flex align={"center"} spacing={4}>
@@ -125,9 +159,10 @@ const MobileMenu = (prop: any) => (
   </div>
 );
 
-const menuList: Array<Menu> = [
+const menuList: Array<MenuType> = [
   { name: "Home", path: "/" },
   { name: "Quizzes", path: "/quizzes" },
+  { name: "Login", path: "/login" },
 ];
 
 export default Navbar;

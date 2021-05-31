@@ -7,4 +7,5 @@ export {
   SELECT_OPTION,
   SHOW_RESULT,
   INITIALISE_QUIZZES,
+  UPDATE_USER_DETAILS,
 } from "./actions";

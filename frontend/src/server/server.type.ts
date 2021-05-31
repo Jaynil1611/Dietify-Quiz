@@ -3,3 +3,10 @@ export type MockServer = {
   url: string;
   data?: Object;
 };
+
+export type SignUp = {
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: string;
+};

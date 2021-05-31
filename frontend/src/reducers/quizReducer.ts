@@ -13,6 +13,7 @@ import {
   SELECT_OPTION,
   SHOW_RESULT,
   UPDATE_SCORE,
+  UPDATE_USER_DETAILS,
 } from "./actions";
 
 export default function quizReducer(
@@ -79,6 +80,14 @@ export default function quizReducer(
         };
       }
       throw new Error("No quiz found!");
+
+    case UPDATE_USER_DETAILS:
+      const { firstname, lastname } = action.payload;
+      return {
+        ...prevState,
+        firstname,
+        lastname,
+      };
 
     case SHOW_RESULT:
       return {
