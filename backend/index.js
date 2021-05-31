@@ -27,6 +27,10 @@ dotenv.config();
 
 initializeDBConnection();
 
+app.get("/", (req, res) => {
+  res.json("Welcome to Dietify Quiz");
+});
+
 app.use("/quizzes", quizRouter);
 app.use("/login", loginRouter);
 app.use("/users", createUserRouter);
@@ -35,10 +39,6 @@ app.use(authHandler);
 
 app.use("/users", userRouter);
 app.use("/attempt", quizAttemptRouter);
-
-app.get("/", (req, res) => {
-  res.json("Welcome to Dietify Quiz");
-});
 
 app.use(pathNotFoundHandler);
 app.use(errorHandler);
