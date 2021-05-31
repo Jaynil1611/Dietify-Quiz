@@ -2,7 +2,7 @@ const { QuizAttempt } = require("../models/quizAttempt.model");
 const { extend } = require("lodash");
 
 const getAllQuizAttempts = async (req, res, next) => {
-  const { userId } = req.params;
+  const { userId } = req;
   const quizzes = QuizAttempt.find({ userId });
   res.status(201).json({ success: true, quizzes });
 };
@@ -10,7 +10,7 @@ const getAllQuizAttempts = async (req, res, next) => {
 const postQuizAttempt = async (req, res, next) => {
   try {
     let quiz = req.body;
-    const { userId } = req.params;
+    const { userId } = req;
     quiz = { userId, ...quiz };
     quiz = new QuizAttempt(quiz);
     quiz = await quiz.save();

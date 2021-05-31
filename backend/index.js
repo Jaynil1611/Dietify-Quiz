@@ -10,6 +10,7 @@ const { createUser } = require("./utils/createUser");
 const quizRouter = require("./routes/quiz.route");
 const quizAttemptRouter = require("./routes/quizAttempt.route");
 const userRouter = require("./routes/user.router");
+const createUserRouter = require("./routes/createUser.router");
 const loginRouter = require("./routes/login.router");
 
 const { pathNotFoundHandler } = require("./middlewares/pathNotFoundHandler");
@@ -27,10 +28,13 @@ dotenv.config();
 initializeDBConnection();
 
 app.use("/quizzes", quizRouter);
-app.use("/users", loginRouter);
+app.use("/login", loginRouter);
+app.use("/users", createUserRouter);
+
 app.use(authHandler);
+
 app.use("/users", userRouter);
-app.use("/user/:userId/attempt", quizAttemptRouter);
+app.use("/attempt", quizAttemptRouter);
 
 app.get("/", (req, res) => {
   res.json("Welcome to Dietify Quiz");

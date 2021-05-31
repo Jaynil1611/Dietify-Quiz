@@ -26,7 +26,8 @@ const UserSchema = new Schema(
           `Password should contain atleast 6 characters (atleast one number & one letter)`,
       },
     },
-    name: { type: String, required: true },
+    firstname: { type: String, required: "First name is required" },
+    lastname: { type: String, required: "Last name is required" },
   },
   opts
 );

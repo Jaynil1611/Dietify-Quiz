@@ -22,7 +22,7 @@ const quizParamHandler = async (req, res, next, quizId) => {
 
 const quizAttemptParamHandler = async (req, res, next, quizId) => {
   try {
-    const { userId } = req.params;
+    const { userId } = req;
     const quiz = await QuizAttempt.findOne({ userId, _id: quizId }).select(
       "-__v"
     );

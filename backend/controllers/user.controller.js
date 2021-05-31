@@ -4,8 +4,33 @@ const bcrypt = require("bcrypt");
 const getUserDetails = async (req, res, next) => {
   try {
     const { userId } = req;
-    const { name, email } = await User.findById(userId);
-    res.status(200).json({ success: true, user: { name, email } });
+    const { firstname, lastname, email } = await User.findById(userId);
+    res
+      .status(200)
+      .json({ success: true, user: { firstname, lastname, email } });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const signUpNewUser = async (req, res, next) => {
+  try {
+    const { firstname, lastname, email, password } = req.body;
+    let user = await User.findOne({ email });
+    if (user) {
+      return res
+        .status(403)
+        .json({ success: false, errorMessage: "User already exists!" });
+    }
+
+    user = new User({ firstname, lastname, email, password });
+    const salt = await bcrypt.genSalt(10);
+    const newPassword = await bcrypt.hash(password, salt);
+    user.set("password", newPassword);
+    await user.save();
+    res
+      .status(201)
+      .json({ success: true, message: "User registration successful" });
   } catch (error) {
     next(error);
   }
@@ -42,4 +67,4 @@ const changePassword = async (req, res, next) => {
   }
 };
 
-module.exports = { changePassword, getUserDetails };
+module.exports = { changePassword, getUserDetails, signUpNewUser };
