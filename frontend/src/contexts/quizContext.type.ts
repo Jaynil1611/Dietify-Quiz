@@ -7,6 +7,7 @@ import {
   SELECT_OPTION,
   SHOW_RESULT,
   INITIALISE_QUIZZES,
+  UPDATE_USER_DETAILS,
 } from "../reducers";
 
 export type InitialState = {
@@ -14,11 +15,16 @@ export type InitialState = {
   quizAttempt: Quiz | null;
   currentQuestionNumber: number;
   showReview: boolean;
+  firstname?: string;
+  lastname?: string;
 };
 
 export type QuizContextType = {
   state: InitialState;
   dispatch: (action: Action) => void;
+  loginUser: (email: string, password: string) => Promise<Boolean>;
+  token: string;
+  logoutUser: () => void;
 };
 
 export type Action =
@@ -38,6 +44,10 @@ export type Action =
   | {
       type: typeof SELECT_OPTION;
       payload: { questionId: string; optionId: string };
+    }
+  | {
+      type: typeof UPDATE_USER_DETAILS;
+      payload: { firstname: string; lastname: string };
     }
   | { type: typeof SHOW_RESULT }
   | { type: typeof RESET_QUIZ };

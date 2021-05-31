@@ -17,3 +17,11 @@ export const primaryButtonStyleProps = {
     boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
   },
 };
+
+export const focusProps = {
+  _focus: {
+    zIndex: 1,
+    borderColor: "#ED8936",
+    boxShadow: "0 0 0 1px #ED8936",
+  },
+};
