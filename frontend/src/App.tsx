@@ -9,13 +9,11 @@ import {
   Login,
   SignUp,
 } from "./components";
-import { useQuiz } from "./contexts";
 import { useAxios } from "./server";
 import "./styles.css";
 import { ScrollToTop, setupAuthHeaderForServerCalls } from "./utils";
 
 function App() {
-  const { token } = useQuiz();
   setupAuthHeaderForServerCalls(
     JSON.parse(localStorage.getItem("isUserLoggedIn")!)
   );
@@ -27,11 +25,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/quizzes" element={<QuizList />} />
-        <PrivateRoute
-          token={token}
-          path="/quizzes/:quizId"
-          element={<Quiz />}
-        />
+        <PrivateRoute path="/quizzes/:quizId" element={<Quiz />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="*" element={<NotFound />} />

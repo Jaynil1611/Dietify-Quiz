@@ -22,7 +22,7 @@ export const QuizContextProvider: React.FC = ({ children }) => {
       (response) => response,
       (error) => {
         if (error?.response?.status === UNAUTHORIZED) {
-          logoutUser();
+          showToast("You need to be logged in", "error");
         }
         return Promise.reject(error);
       }
