@@ -14,7 +14,7 @@ export const submitQuiz = async (quizAttempt: Quiz, quizId: string) => {
   const { error } = await callMockServer({
     type: "post",
     url: `${constructURL()}/attempt/${quizId}`,
-    data: { ...quizAttempt, isSubmitted: true },
+    data: { ...quizAttempt, quizId, isSubmitted: true },
   });
   if (!error) {
     showToast("Your quiz results have been saved!", "success");
@@ -49,7 +49,7 @@ export const getQuizAttempt = async (
 export const updateQuizAttempt = async (quizAttempt: Quiz, quizId: string) => {
   await callMockServer({
     type: "post",
-    data: quizAttempt,
+    data: { ...quizAttempt, quizId },
     url: `${constructURL()}/attempt/${quizId}`,
   });
 };

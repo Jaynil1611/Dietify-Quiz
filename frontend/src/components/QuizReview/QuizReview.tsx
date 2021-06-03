@@ -21,6 +21,7 @@ import {
 } from "../../utils";
 import { showToast } from "../Toast/Toast";
 import { submitQuiz } from "../../server";
+import { useParams } from "react-router";
 
 function QuizReview() {
   const {
@@ -28,10 +29,11 @@ function QuizReview() {
   } = useQuiz();
   const { score, totalQuestions, questions, correct } = quizAttempt!;
   const attempted = getAttemptedQuestions(questions);
+  const { quizId } = useParams();
 
   const saveResults = () => {
     quizAttempt
-      ? submitQuiz(quizAttempt, quizAttempt.id)
+      ? submitQuiz(quizAttempt, quizId)
       : showToast("Failed to save quiz results!", "error");
   };
 

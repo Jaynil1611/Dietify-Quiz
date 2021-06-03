@@ -11,18 +11,20 @@ import { InfoIcon } from "@chakra-ui/icons";
 import { primaryButtonStyleProps, constructURL } from "../../utils";
 import { callMockServer } from "../../server";
 import { showToast } from "../Toast/Toast";
+import { useParams } from "react-router";
 
 function QuizInstructions(prop: QuizInstructionsProps) {
   const {
     setShowQuestions,
     quiz: { name, totalQuestions },
   } = prop;
+  const { quizId } = useParams();
 
   const showQuestions = async () => {
     const { error } = await callMockServer({
       type: "post",
       url: `${constructURL()}/attempt`,
-      data: prop.quiz,
+      data: { ...prop.quiz, quizId },
     });
     if (!error) {
       return setShowQuestions(true);
