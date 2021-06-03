@@ -26,6 +26,7 @@ const QuestionAttemptSchema = new Schema(
 const QuizAttemptSchema = new Schema(
   {
     name: { type: String, required: true },
+    quizId: { type: String, required: true, ref: "Quiz" },
     userId: { type: String, required: true, ref: "User" },
     image: { type: mongoose.SchemaTypes.Url, required: true },
     totalQuestions: { type: Number, required: true },

@@ -23,9 +23,8 @@ const quizParamHandler = async (req, res, next, quizId) => {
 const quizAttemptParamHandler = async (req, res, next, quizId) => {
   try {
     const { userId } = req;
-    const quiz = await QuizAttempt.findOne({ userId, _id: quizId }).select(
-      "-__v"
-    );
+    const quiz = await QuizAttempt.findOne({ userId, quizId }).select("-__v");
+    console.log({ quiz });
     const submitStatus = quiz.isSubmitted;
     if (!quiz || submitStatus) {
       return res

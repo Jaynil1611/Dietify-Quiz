@@ -1,5 +1,6 @@
 const { QuizAttempt } = require("../models/quizAttempt.model");
 const { extend } = require("lodash");
+const { getRequiredDataFromQuiz } = require("../utils/quizAttemptUtils");
 
 const getAllQuizAttempts = async (req, res, next) => {
   const { userId } = req;
@@ -11,14 +12,25 @@ const postQuizAttempt = async (req, res, next) => {
   try {
     let quiz = req.body;
     const { userId } = req;
-    quiz = { userId, ...quiz };
-    quiz = new QuizAttempt(quiz);
-    quiz = await quiz.save();
-    res.status(201).json({ success: true, quiz });
-  } catch (error) {
+    const quizExist = await QuizAttempt.findOne({
+      userId,
+      quizId: quiz.quizId,
+    }).select("-__v");
+
+    if (!quizExist) {
+      quiz = {
+        userId,
+        ...getRequiredDataFromQuiz(quiz),
+      };
+      quiz = new QuizAttempt(quiz);
+      quiz = await quiz.save();
+      return res.status(201).json({ success: true, quiz });
+    }
     res
       .status(409)
       .json({ success: false, message: "Quiz attempt already exists" });
+  } catch (error) {
+    next(error);
   }
 };
 
@@ -31,8 +43,10 @@ const updateQuizAttempt = async (req, res, next) => {
   try {
     const quizUpdates = req.body;
     let { quiz } = req;
-    quiz = extend(quiz, quizUpdates);
+    console.log(quizUpdates);
+    quiz = extend(quiz, getRequiredDataFromQuiz(quizUpdates));
     quiz = await quiz.save();
+    console.log({ quiz });
     res.status(201).json({ success: true, quiz });
   } catch (error) {
     next(error);
