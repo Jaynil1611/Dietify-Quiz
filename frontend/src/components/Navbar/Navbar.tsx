@@ -1,4 +1,11 @@
-import { Box, Flex, IconButton, Drawer, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  IconButton,
+  Drawer,
+  useDisclosure,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { Menu as MenuType } from "./Navbar.type";
@@ -9,6 +16,7 @@ import { CollapseMenu } from "./CollapseMenu";
 
 function Navbar() {
   const { isOpen, onToggle, onClose } = useDisclosure();
+  const [isDesktopMode] = useMediaQuery("(min-width: 648px)");
   const { token } = useQuiz();
 
   return (
@@ -52,7 +60,11 @@ function Navbar() {
           </Flex>
         </Flex>
         <Box display={{ md: "none" }}>
-          <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
+          <Drawer
+            isOpen={isDesktopMode ? false : isOpen}
+            placement="left"
+            onClose={onClose}
+          >
             <MobileMenu
               menuList={menuList}
               closeDrawer={onClose}
