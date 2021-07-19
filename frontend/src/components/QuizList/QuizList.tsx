@@ -7,26 +7,42 @@ import {
   Button,
   Tag,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useQuiz } from "../../contexts/quizContext";
 import { Quiz } from "../../database";
 import { INITIALISE_QUIZ_ATTEMPT } from "../../reducers";
+import { callMockServer } from "../../server";
 import {
   cardContentProps,
   cardImageProps,
   labelProps,
   questionDisplayProps,
   primaryButtonStyleProps,
+  constructURL,
 } from "../../utils";
+import { showToast } from "../Toast/Toast";
 
 function QuizList() {
   const {
     state: { quizzes },
     dispatch,
   } = useQuiz();
+  const navigate = useNavigate();
 
   const loadQuiz = (quiz: Quiz) => {
     dispatch({ type: INITIALISE_QUIZ_ATTEMPT, payload: { quiz } });
+  };
+
+  const clearQuizAttempts = async () => {
+    const { error } = await callMockServer({
+      type: "delete",
+      url: `${constructURL()}/attempt`,
+    });
+    if (!error) {
+      return showToast("Cleared all previous attempts", "success");
+    }
+    showToast("Please login to perform the action", "error");
+    navigate("/login");
   };
 
   return (
@@ -63,6 +79,16 @@ function QuizList() {
           );
         })}
       </SimpleGrid>
+      <Flex justify="center" w="100%">
+        <Button
+          onClick={clearQuizAttempts}
+          mt={2}
+          {...primaryButtonStyleProps}
+          maxW="max"
+        >
+          Clear All Previous Quiz Attempts
+        </Button>
+      </Flex>
     </>
   );
 }

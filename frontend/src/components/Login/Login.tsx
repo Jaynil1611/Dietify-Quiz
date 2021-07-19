@@ -40,6 +40,11 @@ function Login() {
     showToast("User credentials are not valid", "error");
   };
 
+  const fillGuestCredentials = (e: any) => {
+    e.target.form[0].value = "quiz@test.com";
+    e.target.form[1].value = "quiz123";
+  };
+
   return (
     <>
       <Flex width="full" align="center" justifyContent="center" mt={"7rem"}>
@@ -61,6 +66,16 @@ function Login() {
                   number)
                 </FormHelperText>
               </FormControl>
+              <Flex justify="center">
+                <Button
+                  {...primaryButtonStyleProps}
+                  maxW="max-content"
+                  mt={8}
+                  onClick={fillGuestCredentials}
+                >
+                  Fill Guest Credentials
+                </Button>
+              </Flex>
               <Button
                 {...primaryButtonStyleProps}
                 width="full"

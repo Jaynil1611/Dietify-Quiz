@@ -24,7 +24,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { showToast } from "../Toast/Toast";
 
 function SignUp() {
-  const navigate = useNavigate();
+  const navigate = useNavigate();  
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     const { email, password, firstname, lastname } = getFormValues(e, "signup");

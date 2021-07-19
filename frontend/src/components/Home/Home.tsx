@@ -24,7 +24,7 @@ function Home() {
         </Flex>
         <Box>
           <Image
-            src="https://cdn-apabk.nitrocdn.com/QQUvjmPGpOGmpUxCkqAsSnVUjfEULAuk/assets/static/optimized/rev-9b34b5b/wp-content/uploads/2020/09/Food-Trivia-e1609813180214.jpg"
+            src="https://raw.githubusercontent.com/Jaynil1611/Coding-Archives/master/Food-Trivia-e1609813180214.jpg"
             alt="hero"
             height={{ base: "auto", md: "60vh" }}
             width="100%"
