@@ -83,6 +83,16 @@ const updateQuizAttemptQuestion = async (req, res, next) => {
   }
 };
 
+const clearAllQuizAttempts = async (req, res, next) => {
+  try {
+    const { userId } = req;
+    await QuizAttempt.deleteMany({ userId });
+    res.status(200).json({ success: true });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getAllQuizAttempts,
   getQuizAttempt,
@@ -91,4 +101,5 @@ module.exports = {
   updateQuizAttempt,
   updateQuizAttemptQuestion,
   deleteQuizAttempt,
+  clearAllQuizAttempts,
 };

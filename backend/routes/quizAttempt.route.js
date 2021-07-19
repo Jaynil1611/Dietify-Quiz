@@ -12,9 +12,14 @@ const {
   getQuizAttemptQuestion,
   updateQuizAttemptQuestion,
   deleteQuizAttempt,
+  clearAllQuizAttempts,
 } = require("../controllers/quizAttempt.controller");
 
-router.route("/").get(getAllQuizAttempts).post(postQuizAttempt);
+router
+  .route("/")
+  .get(getAllQuizAttempts)
+  .post(postQuizAttempt)
+  .delete(clearAllQuizAttempts);
 
 router.param("quizId", quizAttemptParamHandler);
 
