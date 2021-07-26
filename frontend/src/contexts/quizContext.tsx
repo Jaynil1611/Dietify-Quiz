@@ -1,4 +1,3 @@
-import axios from "axios";
 import { createContext, useContext, useReducer, useState } from "react";
 import { showToast } from "../components";
 import { quizReducer, UPDATE_USER_DETAILS } from "../reducers";
@@ -15,19 +14,6 @@ export const QuizContextProvider: React.FC = ({ children }) => {
   const [token, setToken] = useState(
     savedToken ? JSON.parse(savedToken) : null
   );
-
-  const setupAuthExceptionHandler = () => {
-    const UNAUTHORIZED = 401;
-    axios.interceptors.response.use(
-      (response) => response,
-      (error) => {
-        if (error?.response?.status === UNAUTHORIZED) {
-          showToast("You need to be logged in", "error");
-        }
-        return Promise.reject(error);
-      }
-    );
-  };
 
   const loginUser = async (
     email: string,

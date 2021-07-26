@@ -8,7 +8,6 @@ import {
   Container,
   HStack,
   Heading,
-  Button,
 } from "@chakra-ui/react";
 import { useQuiz } from "../../contexts/quizContext";
 import QuestionReview from "./QuestionReview";
@@ -17,11 +16,11 @@ import {
   correctColor,
   wrongColor,
   questionColor,
-  primaryButtonStyleProps,
 } from "../../utils";
 import { showToast } from "../Toast/Toast";
 import { submitQuiz } from "../../server";
 import { useParams } from "react-router";
+import { useEffect } from "react";
 
 function QuizReview() {
   const {
@@ -31,11 +30,11 @@ function QuizReview() {
   const attempted = getAttemptedQuestions(questions);
   const { quizId } = useParams();
 
-  const saveResults = () => {
+  useEffect(() => {
     quizAttempt
       ? submitQuiz(quizAttempt, quizId)
       : showToast("Failed to save quiz results!", "error");
-  };
+  }, [quizAttempt, quizId]);
 
   return (
     <>
@@ -89,17 +88,6 @@ function QuizReview() {
               </Stat>
             </HStack>
           </Container>
-          <Box textAlign={"center"}>
-            <Button
-              {...primaryButtonStyleProps}
-              maxW={"min"}
-              p={{ md: 3 }}
-              m={3}
-              onClick={saveResults}
-            >
-              Save Results
-            </Button>
-          </Box>
           <QuestionReview />
         </>
       )}
