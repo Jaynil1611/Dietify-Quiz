@@ -31,7 +31,7 @@ function QuizReview() {
   const { quizId } = useParams();
 
   useEffect(() => {
-    quizAttempt
+    quizAttempt && quizId
       ? submitQuiz(quizAttempt, quizId)
       : showToast("Failed to save quiz results!", "error");
   }, [quizAttempt, quizId]);

@@ -4,7 +4,7 @@ import { DesktopProps } from "./Navbar.type";
 import { NavLink } from "react-router-dom";
 
 export const DesktopMenu = ({ menuList, token }: DesktopProps) => (
-  <Flex align={"center"} spacing={4}>
+  <Flex align={"center"} gap={4}>
     {getMenuList(menuList, token).map(({ name, path }) => (
       <NavLink to={path} key={name}>
         <Box

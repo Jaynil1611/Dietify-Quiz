@@ -26,7 +26,7 @@ function Quiz() {
 
   useEffect(() => {
     (async () => {
-      if (!quizzes.length) return;
+      if (!quizzes.length || !quizId) return;
       const result = await getQuizAttempt(dispatch, quizId);
       if (result) return setShowQuestions(true);
       const quiz = findQuiz(quizzes, quizId);

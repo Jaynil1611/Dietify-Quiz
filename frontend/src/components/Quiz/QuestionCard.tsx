@@ -36,7 +36,7 @@ function QuestionCard(prop: QuestionProp) {
 
   useEffect(() => {
     (async () => {
-      if (quizAttempt) updateQuizAttempt(quizAttempt, quizId);
+      if (quizAttempt && quizId) updateQuizAttempt(quizAttempt, quizId);
     })();
   }, [score]);
 
