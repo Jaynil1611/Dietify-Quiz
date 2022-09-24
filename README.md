@@ -12,7 +12,7 @@ View the deployed the backend application here 👉 [Dietify Quiz Backend](https
 
 ## Application View!
 
-
+![dietify-quiz vercel app](https://user-images.githubusercontent.com/48921037/192089148-acc5b26e-35ec-46af-83ee-77d5017ed663.png)
 
 ## Technologies Used
 - HTML
